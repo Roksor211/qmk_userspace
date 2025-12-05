@@ -9,3 +9,8 @@
 *.hex
 *.bin
 *.uf2
+/.idea/vcs.xml
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/qmk_userspace.iml
