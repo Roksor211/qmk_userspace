@@ -59,7 +59,7 @@ static uint8_t td_esc_state    = TD_STATE_NONE;
 static uint8_t td_clk_state    = TD_STATE_NONE;
 static uint8_t td_layers_state = TD_STATE_NONE;
 
-static uint8_t current_dance(qk_tap_dance_state_t *state) {
+static uint8_t current_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         return state->pressed ? TD_STATE_SINGLE_HOLD : TD_STATE_SINGLE_TAP;
     }
@@ -93,7 +93,7 @@ static void tap_tmux_prefix(uint16_t keycode) {
     tap_code16(keycode);
 }
 
-void esc_scroll_slow_finished(qk_tap_dance_state_t *state, void *user_data) {
+void esc_scroll_slow_finished(tap_dance_state_t *state, void *user_data) {
     td_esc_state = current_dance(state);
 
     switch (td_esc_state) {
@@ -113,7 +113,7 @@ void esc_scroll_slow_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void esc_scroll_slow_reset(qk_tap_dance_state_t *state, void *user_data) {
+void esc_scroll_slow_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_esc_state) {
         case TD_STATE_SINGLE_HOLD:
             layer_off(L_SCROLL);
@@ -126,7 +126,7 @@ void esc_scroll_slow_reset(qk_tap_dance_state_t *state, void *user_data) {
     td_esc_state = TD_STATE_NONE;
 }
 
-void clk_sym_finished(qk_tap_dance_state_t *state, void *user_data) {
+void clk_sym_finished(tap_dance_state_t *state, void *user_data) {
     td_clk_state = current_dance(state);
 
     switch (td_clk_state) {
@@ -144,7 +144,7 @@ void clk_sym_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void clk_sym_reset(qk_tap_dance_state_t *state, void *user_data) {
+void clk_sym_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_clk_state) {
         case TD_STATE_SINGLE_HOLD:
         case TD_STATE_DOUBLE_HOLD:
@@ -155,7 +155,7 @@ void clk_sym_reset(qk_tap_dance_state_t *state, void *user_data) {
     td_clk_state = TD_STATE_NONE;
 }
 
-void layers_finished(qk_tap_dance_state_t *state, void *user_data) {
+void layers_finished(tap_dance_state_t *state, void *user_data) {
     td_layers_state = current_dance(state);
 
     switch (td_layers_state) {
@@ -172,7 +172,7 @@ void layers_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void layers_reset(qk_tap_dance_state_t *state, void *user_data) {
+void layers_reset(tap_dance_state_t *state, void *user_data) {
     if (td_layers_state == TD_STATE_SINGLE_HOLD) {
         layer_off(L_EXTRAS);
     }
@@ -180,7 +180,7 @@ void layers_reset(qk_tap_dance_state_t *state, void *user_data) {
     td_layers_state = TD_STATE_NONE;
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_ESC_SCROLL_SLOW] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, esc_scroll_slow_finished, esc_scroll_slow_reset),
     [TD_CLK_SYM]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, clk_sym_finished, clk_sym_reset),
     [TD_LAYERS]          = ACTION_TAP_DANCE_FN_ADVANCED(NULL, layers_finished, layers_reset),
@@ -217,7 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_NUM] = LAYOUT(
         KC_F12,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,              KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
-        XXXXXXX,         XXXXXXX,        X(DE_AE),       X(DE_UE),       X(DE_OE),       X(DE_SS),          KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_RBRC,        XXXXXXX,
+        XXXXXXX,         XXXXXXX,        UM(DE_AE),      UM(DE_UE),      UM(DE_OE),      UM(DE_SS),         KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_RBRC,        XXXXXXX,
         XXXXXXX,         KC_LGUI,        KC_LALT,        KC_LSFT,        KC_LCTL,        XXXXXXX,            KC_PLUS,        KC_4,           KC_5,           KC_6,           KC_MINS,        KC_EQL,
         XXXXXXX,         XXXXXXX,        XXXXXXX,        CK_BITWARDEN_OPEN, XXXXXXX,     XXXXXXX,            KC_ASTR,        KC_1,           KC_2,           KC_3,           KC_SLSH,        KC_DOT,
                                               _______,                  _______,         _______,            KC_0,           _______,
