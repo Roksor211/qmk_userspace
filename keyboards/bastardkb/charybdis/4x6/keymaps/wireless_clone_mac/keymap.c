@@ -31,7 +31,7 @@ enum custom_keycodes {
     CK_COMMA_SCLN,
     CK_DOT_COLN,
     CK_QM_EXLM,
-    CK_TART_LOGIN,
+    CK_BITWARDEN_OPEN,
 };
 
 enum {
@@ -219,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F12,          KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,              KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,
         XXXXXXX,         XXXXXXX,        X(DE_AE),       X(DE_UE),       X(DE_OE),       X(DE_SS),          KC_LBRC,        KC_7,           KC_8,           KC_9,           KC_RBRC,        XXXXXXX,
         XXXXXXX,         KC_LGUI,        KC_LALT,        KC_LSFT,        KC_LCTL,        XXXXXXX,            KC_PLUS,        KC_4,           KC_5,           KC_6,           KC_MINS,        KC_EQL,
-        XXXXXXX,         XXXXXXX,        XXXXXXX,        CK_TART_LOGIN,  XXXXXXX,        XXXXXXX,            KC_ASTR,        KC_1,           KC_2,           KC_3,           KC_SLSH,        KC_DOT,
+        XXXXXXX,         XXXXXXX,        XXXXXXX,        CK_BITWARDEN_OPEN, XXXXXXX,     XXXXXXX,            KC_ASTR,        KC_1,           KC_2,           KC_3,           KC_SLSH,        KC_DOT,
                                               _______,                  _______,         _______,            KC_0,           _______,
                                                                        XXXXXXX,          XXXXXXX,            XXXXXXX
     ),
@@ -362,9 +362,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_morph_key(KC_QUES, KC_EXLM);
             return false;
 
-        case CK_TART_LOGIN:
-            SEND_STRING("$Tart1976!26:05");
-            tap_code(KC_ENT);
+        case CK_BITWARDEN_OPEN:
+            tap_code16(G(S(KC_Y)));
             return false;
     }
 
